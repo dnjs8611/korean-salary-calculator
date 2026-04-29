@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026년 최신 연봉 실수령액 계산기. 국민연금, 건강보험, 소득세를 제외한 진짜 내 월급을 계산해 보세요. 토스 스타일의 깔끔한 세금 계산기.">
+    <title>연봉 실수령액 계산기 | 2026년 최신 세금 계산</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1 id="main-title">연봉 실수령액 계산기</h1>
+            <p class="subtitle">세금을 제외한 내 진짜 월급은 얼마일까요?</p>
+        </header>
+
+        <main>
+            <section class="calculator-card">
+                <div class="toggle-group">
+                    <button id="calc-type-annual" class="toggle-btn active">연봉</button>
+                    <button id="calc-type-monthly" class="toggle-btn">월급</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="salary-input" id="input-label">연봉 입력</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="salary-input" placeholder="예: 4,000" autocomplete="off">
+                        <span class="unit" id="input-unit">만원</span>
+                    </div>
+                </div>
+
+                <div class="advanced-settings">
+                    <details>
+                        <summary>고급 설정 (비과세, 부양가족)</summary>
+                        <div class="details-content">
+                            <div class="input-group-sub">
+                                <label for="non-taxable">비과세액 (월)</label>
+                                <div class="input-wrapper-sub">
+                                    <input type="text" id="non-taxable" value="20" autocomplete="off">
+                                    <span class="unit">만원</span>
+                                </div>
+                            </div>
+                            <div class="input-group-sub">
+                                <label for="dependents">부양가족 수 (본인 포함)</label>
+                                <div class="input-wrapper-sub">
+                                    <input type="number" id="dependents" value="1" min="1" max="11">
+                                    <span class="unit">명</span>
+                                </div>
+                            </div>
+                            <div class="input-group-sub">
+                                <label for="children">20세 이하 자녀 수</label>
+                                <div class="input-wrapper-sub">
+                                    <input type="number" id="children" value="0" min="0" max="10">
+                                    <span class="unit">명</span>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <button id="calculate-btn" class="primary-btn">계산하기</button>
+            </section>
+
+            <section id="result-section" class="result-card hidden">
+                <div class="result-header">
+                    <h2>예상 월 실수령액</h2>
+                    <div class="net-income-display">
+                        <span id="net-income-value">0</span>
+                        <span class="currency">원</span>
+                    </div>
+                </div>
+
+                <div class="result-divider"></div>
+
+                <div class="tax-breakdown">
+                    <h3>월 공제액 요약</h3>
+                    <div class="total-tax-display">
+                        총 <span id="total-tax-value">0</span>원 공제
+                    </div>
+
+                    <div class="breakdown-list">
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot pension"></span>국민연금 (4.5%)</span>
+                            <span class="item-value" id="pension-value">0원</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot health"></span>건강보험 (3.545%)</span>
+                            <span class="item-value" id="health-value">0원</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot care"></span>장기요양 (12.95%)</span>
+                            <span class="item-value" id="care-value">0원</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot employment"></span>고용보험 (0.9%)</span>
+                            <span class="item-value" id="employment-value">0원</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot income"></span>소득세</span>
+                            <span class="item-value" id="income-tax-value">0원</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-name"><span class="color-dot local"></span>지방소득세 (10%)</span>
+                            <span class="item-value" id="local-tax-value">0원</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-bar-track">
+                        <div id="net-income-bar" class="chart-bar net-income-bar"></div>
+                        <div id="tax-bar" class="chart-bar tax-bar"></div>
+                    </div>
+                    <div class="chart-labels">
+                        <span>실수령액 <span id="net-percent">0</span>%</span>
+                        <span>공제액 <span id="tax-percent">0</span>%</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="adsense-placeholder">
+                <span>광고 수익화 영역 (AdSense)</span>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 연봉 실수령액 계산기. All rights reserved.</p>
+            <p class="footer-disclaimer">본 계산기는 모의 계산 결과이며, 실제 수령액은 회사 규정 및 개인 조건에 따라 다를 수 있습니다.</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
