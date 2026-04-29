@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://korean-salary-calculator.vercel.app/sitemap.xml
