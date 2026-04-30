@@ -189,3 +189,113 @@ document.addEventListener('DOMContentLoaded', () => {
         resultSection.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Tab Switching Logic
+    const mainTabBtns = document.querySelectorAll('.main-tab-btn');
+    const calcSections = document.querySelectorAll('.calc-section');
+
+    mainTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active from all tabs and sections
+            mainTabBtns.forEach(b => b.classList.remove('active'));
+            calcSections.forEach(s => s.classList.remove('active'));
+            
+            // Add active to clicked tab and corresponding section
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.target).classList.add('active');
+        });
+    });
+
+    // Holiday Pay Elements
+    const hourlyWageInput = document.getElementById('hourly-wage');
+    const weeklyHoursInput = document.getElementById('weekly-hours');
+    const calcHolidayBtn = document.getElementById('calculate-holiday-btn');
+    const holidayResultSection = document.getElementById('holiday-result-section');
+
+    const weeklyTotalValue = document.getElementById('weekly-total-value');
+    const basePayValue = document.getElementById('base-pay-value');
+    const holidayPayValue = document.getElementById('holiday-pay-value');
+    const monthlyTotalValue = document.getElementById('monthly-total-value');
+
+    const basePayBar = document.getElementById('base-pay-bar');
+    const holidayPayBar = document.getElementById('holiday-pay-bar');
+    const basePercent = document.getElementById('base-percent');
+    const holidayPercent = document.getElementById('holiday-percent');
+
+    // Input formatting for hourly wage
+    if (hourlyWageInput) {
+        hourlyWageInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value) {
+                e.target.value = parseInt(value).toLocaleString('ko-KR');
+            }
+        });
+    }
+
+    // Remove commas from string function
+    const parseNum = (str) => {
+        return parseFloat(str.replace(/,/g, '')) || 0;
+    };
+    
+    // Format number with commas function
+    const formatNum = (num) => {
+        return Math.round(num).toLocaleString('ko-KR');
+    };
+
+    // Calculate Holiday Pay
+    if (calcHolidayBtn) {
+        calcHolidayBtn.addEventListener('click', () => {
+            const hourlyWage = parseNum(hourlyWageInput.value);
+            const weeklyHours = parseFloat(weeklyHoursInput.value) || 0;
+
+            if (hourlyWage <= 0) {
+                alert('시급을 올바르게 입력해 주세요.');
+                return;
+            }
+            if (weeklyHours <= 0) {
+                alert('근무시간을 입력해 주세요.');
+                return;
+            }
+
+            // 기본급
+            const basePay = hourlyWage * weeklyHours;
+            
+            // 주휴수당
+            let holidayPay = 0;
+            if (weeklyHours >= 15) {
+                // 최대 40시간까지만 주휴수당 산정
+                const calcHours = Math.min(weeklyHours, 40);
+                holidayPay = (calcHours / 40) * 8 * hourlyWage;
+            }
+
+            const weeklyTotal = basePay + holidayPay;
+            // 월급 (주급 * 4.345주)
+            const monthlyTotal = Math.round(weeklyTotal * 4.345);
+
+            // UI Update
+            weeklyTotalValue.textContent = formatNum(weeklyTotal);
+            basePayValue.textContent = formatNum(basePay) + '원';
+            holidayPayValue.textContent = formatNum(holidayPay) + '원';
+            monthlyTotalValue.textContent = formatNum(monthlyTotal);
+
+            // Chart Update
+            if (weeklyTotal > 0) {
+                const baseRatio = (basePay / weeklyTotal) * 100;
+                const holidayRatio = (holidayPay / weeklyTotal) * 100;
+
+                basePayBar.style.width = `${baseRatio}%`;
+                holidayPayBar.style.width = `${holidayRatio}%`;
+                
+                basePercent.textContent = Math.round(baseRatio);
+                holidayPercent.textContent = Math.round(holidayRatio);
+            } else {
+                basePayBar.style.width = '100%';
+                holidayPayBar.style.width = '0%';
+            }
+
+            holidayResultSection.classList.remove('hidden');
+            holidayResultSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+});

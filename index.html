@@ -13,11 +13,18 @@
 <body>
     <div class="app-container">
         <header>
-            <h1 id="main-title">연봉 실수령액 계산기</h1>
-            <p class="subtitle">세금을 제외한 내 진짜 월급은 얼마일까요?</p>
+            <h1 id="main-title">직장인·알바 계산기</h1>
+            <p class="subtitle">내 진짜 월급과 주휴수당은 얼마일까요?</p>
         </header>
 
+        <nav class="main-tabs">
+            <button class="main-tab-btn active" data-target="salary-calc">연봉 계산기</button>
+            <button class="main-tab-btn" data-target="holiday-calc">주휴수당 계산기</button>
+        </nav>
+
         <main>
+            <!-- 연봉 계산기 섹션 -->
+            <div id="salary-calc" class="calc-section active">
             <section class="calculator-card">
                 <div class="toggle-group">
                     <button id="calc-type-annual" class="toggle-btn active">연봉</button>
@@ -120,6 +127,79 @@
                     </div>
                 </div>
             </section>
+            </div>
+
+            <!-- 주휴수당 계산기 섹션 -->
+            <div id="holiday-calc" class="calc-section">
+                <section class="calculator-card">
+                    <div class="input-group">
+                        <label for="hourly-wage">시급 입력</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="hourly-wage" value="9,860" autocomplete="off">
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="helper-text">2024년 최저시급: 9,860원</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="weekly-hours">1주 근무시간</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="weekly-hours" placeholder="예: 15" min="1" max="168" autocomplete="off">
+                            <span class="unit">시간</span>
+                        </div>
+                        <div class="helper-text">15시간 이상 근무 시 주휴수당 발생 (최대 40시간 인정)</div>
+                    </div>
+
+                    <button id="calculate-holiday-btn" class="primary-btn">주급/월급 계산하기</button>
+                </section>
+
+                <section id="holiday-result-section" class="result-card hidden">
+                    <div class="result-header">
+                        <h2>예상 주급 (주휴수당 포함)</h2>
+                        <div class="net-income-display">
+                            <span id="weekly-total-value">0</span>
+                            <span class="currency">원</span>
+                        </div>
+                    </div>
+
+                    <div class="result-divider"></div>
+
+                    <div class="tax-breakdown">
+                        <h3>급여 상세 요약</h3>
+                        <div class="breakdown-list">
+                            <div class="breakdown-item">
+                                <span class="item-name">기본급 (시급 × 근무시간)</span>
+                                <span class="item-value" id="base-pay-value">0원</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="item-name" style="color:var(--primary-color); font-weight:700;">+ 주휴수당</span>
+                                <span class="item-value" id="holiday-pay-value" style="color:var(--primary-color);">0원</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-bar-track">
+                            <div id="base-pay-bar" class="chart-bar tax-bar" style="background-color: var(--border-color);"></div>
+                            <div id="holiday-pay-bar" class="chart-bar net-income-bar"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span style="color:var(--text-sub);">기본급 <span id="base-percent">0</span>%</span>
+                            <span style="color:var(--primary-color);">주휴수당 <span id="holiday-percent">0</span>%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-divider"></div>
+                    
+                    <div class="result-header" style="margin-top:20px;">
+                        <h2 style="font-size: 0.95rem; color:var(--text-sub);">예상 월급 (주급 × 4.345주)</h2>
+                        <div class="net-income-display" style="font-size: 1.6rem;">
+                            <span id="monthly-total-value">0</span>
+                            <span class="currency">원</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
             <div class="tenping-ad-container" style="margin-bottom: 20px;">
                 <tenping class="adsbytenping" style="width:100%;max-width:768px;margin:0px auto;display:block;" tenping-ad-display-type="1LawCE8FqKOhetXZhMopsQ%3d%3d" tenping-ad-client="tq2AgbuKDjVexGYt8c9cpK5LSA5PL6Xnq3xVtMiGgeTtPGYucnAKoemsC0Hl1RQo"></tenping>

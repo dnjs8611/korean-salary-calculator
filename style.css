@@ -370,3 +370,52 @@ footer {
         margin-top: 20px;
     }
 }
+
+/* Main Tabs Navigation */
+.main-tabs {
+    display: flex;
+    background-color: #e5e8eb;
+    border-radius: 16px;
+    padding: 6px;
+    margin-bottom: 24px;
+}
+
+.main-tab-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.main-tab-btn.active {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.calc-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.calc-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.helper-text {
+    font-size: 0.8rem;
+    color: var(--text-tip);
+    margin-top: 8px;
+    margin-left: 4px;
+}
